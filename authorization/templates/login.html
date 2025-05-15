@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<title>Simple Sign up from</title>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            font-family: Roboto, Arial, sans-serif !important;
+            font-size: 15px;
+        }
+
+        form {
+            margin-top: 5vh;
+            padding-top: 40px;
+            border: 5px solid #f1f1f1;
+        }
+
+        input[type=text],
+        input[type=password] {
+            margin-top: 10px !important;
+            width: 100%;
+            padding: 16px 8px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .icon {
+            font-size: 90px;
+            display: flex;
+            justify-content: center;
+            color: #4286f4;
+        }
+
+        button {
+            background-color: #4286f4;
+            color: white;
+            padding: 14px 0;
+            margin: 10px 0;
+            border: none;
+            cursor: grab !important;
+            width: 48% !important;
+            border-radius: 10px !important;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 18;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .formcontainer {
+            text-align: center;
+            margin: 24px 50px 12px;
+        }
+
+        .container {
+            padding: 16px 0;
+            text-align: left;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 0;
+            padding-right: 15px;
+        }
+
+        input {
+            border-radius: 10px;
+        }
+
+        #form {
+            border-radius: 50px;
+            width: 50vw;
+            background: ivory;
+            box-shadow: rgb(48, 86, 169) 5px 0px 20px;
+        }
+
+        @media screen and (max-width: 1000px) {
+
+            .form-control {
+                font-size: 3rem !important;
+            }
+
+            #form {
+                background: ivory;
+                margin-top: 10vh;
+                padding-top: 10vh;
+                padding-bottom: 10vh;
+                font-size: 2vh;
+                max-height: 80vh;
+                width: 95vw;
+                box-shadow: rgb(48, 86, 169) 5px 0px 20px;
+            }
+
+            button {
+                width: 70vw;
+                font-size: 2vh;
+            }
+
+            input {
+                height: 5vh;
+                font-size: 40px;
+                width: 75vw;
+                border-radius: 10px;
+                font-size: 1.7vh;
+                box-shadow: grey 5px 0px 20px;
+            }
+
+            input::placeholder {
+                padding-left: 10vw;
+                font-size: 1.7vh;
+            }
+
+            .icon {
+                font-size: 140px;
+            }
+
+            .icon-text {
+                font-size: 60px;
+            }
+
+            .valid-feedback,
+            .invalid-feedback {
+                /* position: relative !important; */
+                top: -75px !important;
+            }
+        }
+
+        .valid-feedback,
+        .invalid-feedback {
+            position: relative;
+            top: -25px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body onload="show('{{message}}')">
+
+    <form action="/login/" id="form" method="POST">
+        {%csrf_token%}
+        <h1 class="icon-text">Login to MoeGPT</h1>
+        <div class="icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="formcontainer">
+            <div class="container">
+                <label for="mail"><strong>E-mail</strong></label>
+                <input type="text" placeholder="Enter E-mail" name="mail" required id="email" oninput="check('email');"
+                    class="form-control"><br><br>
+                <div class="valid-feedback">
+                    Looks Good
+                </div>
+                <div class="invalid-feedback">
+                    No accout exist with the given email
+                </div>
+                <label for="psw"><strong>Password</strong></label>
+                <input type="password" placeholder="Enter Password" class="form-control" name="pwd" required><br><br>
+            </div>
+            <button type="submit"><strong>LOGIN</strong></button>
+            <div class="container">
+                <span class="psw"><a href="/register/">Don't have account? <i>Register</i></a></span>
+            </div>
+            <script>
+                function check(id) {
+                    var email = document.getElementById(id).value;
+
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+
+                    // Configure it: POST-request for the URL /check_email/
+                    xhr.open('POST', '/check_email/', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken')); // Include CSRF token
+
+                    // Set up a function to handle the response
+                    xhr.onload = function () {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            var response = JSON.parse(xhr.responseText);
+
+                            if (response.exists) {
+                                document.getElementById(id).className = "form-control is-valid";
+                            } else {
+                                document.getElementById(id).className = "form-control is-invalid";
+                            }
+
+                        } else {
+                            console.error('Request failed with status:', xhr.status);
+                        }
+                    };
+
+                    // Send the request with the email data
+                    xhr.send(JSON.stringify({ attribute: email }));
+                }
+
+                // Function to get CSRF token
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            // Check if this cookie string begins with the name we want
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                function show(message) {
+                    console.log("message is " + message);
+                    if (message.trim() == '') return;
+                    alert(message);
+                }
+            </script>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

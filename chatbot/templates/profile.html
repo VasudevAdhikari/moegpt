@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile View</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .container {
+            margin-top: 20vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card shadow-sm" style="max-width: 540px; margin: 0 auto;">
+            <div class="row g-0">
+                <div class="col-md-4 p-3 text-center">
+                    <i class="fas fa-user" id="user-icon"></i>
+                    <div class="mt-2">
+                        <span class="badge bg-success">Profile</span>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            {{request.user.username}}
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </h5>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-briefcase"></i> {{request.user.email}}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fas fa-map-marker-alt"></i>One of MoeGPT users
+                            </small>
+                        </p>
+                        <div class="border-top pt-2">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <h6>Chats</h6>
+                                    <strong>{{chat_count}}</strong>
+                                </div>
+                                <div class="col border-start">
+                                    <h6>Date Joined</h6>
+                                    <strong>{{request.user.date_joined|date:"F j, Y"}}</strong>
+                                </div>
+                                <div class="col border-start">
+                                    <h6>Modules</h6>
+                                    <strong>{{module_count}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-around">
+                    <button class="btn btn-link text-decoration-none">
+                        <a href="/logout/">
+                            <i class="fas fa-log"></i> Logout
+                        </a>
+                    </button>
+                    <button class="btn btn-link text-decoration-none">
+                        <a href="#">
+                            <i class="fas fa-envelope"></i> Change Password
+                        </a>
+                    </button>
+                    <button class="btn btn-link text-decoration-none">
+                        <a href="/chatbot/"> 
+                            <i class="fas fa-share"></i> Back
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

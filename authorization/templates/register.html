@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<title>Simple Sign up from</title>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+        html,
+        body {
+            display: flex;
+            justify-content: center !important;
+            font-family: Roboto, Arial, sans-serif !important;
+            font-size: 15px;
+        }
+
+        form {
+            margin-top: 5vh;
+            padding-top: 40px;
+            border: 5px solid #f1f1f1;
+        }
+
+        input[type=text],
+        input[type=password] {
+            margin-top: 10px !important;
+            width: 100%;
+            padding: 16px 8px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .icon {
+            font-size: 90px;
+            display: flex;
+            justify-content: center;
+            color: #4286f4;
+        }
+
+        button {
+            background-color: #4286f4;
+            color: white;
+            padding: 14px 0;
+            /* margin-top:  */
+            margin-left: 26% !important;
+            margin-top: 40px !important;
+            border: none;
+            cursor: grab !important;
+            width: 48% !important;
+            border-radius: 10px !important;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 18;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .formcontainer {
+            text-align: center;
+            margin: 24px 50px 12px;
+        }
+
+        .container {
+            padding: 16px 0;
+            text-align: left;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 0;
+            padding-right: 15px;
+        }
+
+        input {
+            border-radius: 10px;
+        }
+
+        #form {
+            border-radius: 50px;
+            width: 50vw;
+            background: ivory;
+            box-shadow: rgb(48, 86, 169) 5px 0px 20px;
+        }
+
+        @media screen and (max-width: 1000px) {
+
+            .form-control {
+                font-size: 3rem !important;
+            }
+
+            #form {
+                background: ivory;
+                margin-top: 10vh;
+                padding-top: 10vh;
+                padding-bottom: 10vh;
+                font-size: 2vh;
+                max-height: 80vh;
+                width: 95vw;
+                box-shadow: rgb(48, 86, 169) 5px 0px 20px;
+            }
+
+            button {
+                width: 70vw;
+                font-size: 2vh;
+            }
+
+            input {
+                height: 5vh;
+                font-size: 40px;
+                width: 75vw;
+                border-radius: 10px;
+                font-size: 1.7vh;
+                box-shadow: grey 5px 0px 20px;
+            }
+
+            input::placeholder {
+                padding-left: 10vw;
+                font-size: 1.7vh;
+            }
+
+            .icon {
+                font-size: 140px;
+            }
+
+            .icon-text {
+                font-size: 60px;
+            }
+
+            #username-invalid-feedback,
+            #email-invalid-feedback,
+            #username-valid-feedback,
+            #email-valid-feedback {
+                position: relative !important;
+                top: -75px !important;
+            }
+
+            #password-invalid-feedback,
+            #password-valid-feedback {
+                top: 8px;
+            }
+        }
+
+        .valid-feedback,
+        .invalid-feedback {
+            position: relative;
+            top: -25px;
+        }
+
+        #password-invalid-feedback,
+        #password-valid-feedback {
+            top: 3px !important;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <form action="/register/" id="form" method="POST">
+        {%csrf_token%}
+        <h1 class="icon-text">Register to MoeGPT</h1>
+        <div class="icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="formcontainer">
+            <div class="container">
+                <label for="uname"><strong>Username</strong></label>
+                <input type="text" class="form-control" id="username" placeholder="Enter Username" name="uname" required
+                    oninput="check('username', '/check_username/')"><br><br>
+                <div class="valid-feedback" id="username-valid-feedback" style="display: none;">Looks Good</div>
+                <div class="invalid-feedback" id="username-invalid-feedback" style="display: none;">Provided username
+                    already exists</div>
+
+                <label for="mail"><strong>E-mail</strong></label>
+                <input type="text" class="form-control" id="email" oninput="check('email', '/check_email/')"
+                    placeholder="Enter E-mail" name="mail" required><br><br>
+                <div class="valid-feedback" id="email-valid-feedback" style="display: none;">Looks Good</div>
+                <div class="invalid-feedback" id="email-invalid-feedback" style="display: none;">Provided email already
+                    exists</div>
+
+                <label for="psw"><strong>Password</strong></label>
+                <input type="password" placeholder="Enter Password" name="pwd" id="password" oninput="check_password()"
+                    required>
+                <div class="valid-feedback" id="password-valid-feedback" style="display: none;">Password is strong</div>
+                <div class="invalid-feedback" id="password-invalid-feedback" style="display: none;">Password is weak
+                </div>
+                <button type="submit"><strong>SIGN UP</strong></button>
+                <div class="container">
+                    <span class="psw"><a href="/login/">Already have account? <i>Login</i></a></span>
+                </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        function get_password_strength(password) {
+            regex = /^.{8,}$/;
+            if (!regex.test(password)) return "Add at least 8 characters needed";
+
+            regex = /(?=.*[a-z])/;
+            if (!regex.test(password)) return "Add at least one lowercase character";
+
+            regex = /(?=.*[A-Z])/;
+            if (!regex.test(password)) return "Add at least one uppercase character";
+
+            regex = /(?=.*[0-9])/;
+            if (!regex.test(password)) return "Add at least one digit";
+
+            regex = /(?=.*[!@#$%^&*(),.?":{}|<>\-])/;
+            if (!regex.test(password)) return "Add at least one special character needed";
+
+            return true;
+        }
+
+        function check_password() {
+            var password = document.getElementById("password").value;
+            console.log(password);
+            var password_strength = get_password_strength(password);
+            if (password_strength == true) {
+                document.getElementById("password").className = 'form-control is-valid';
+                document.getElementById("password-valid-feedback").style.display = 'block';
+                document.getElementById("password-invalid-feedback").style.display = 'none';
+            }
+            else {
+                console.log('password is not strong');
+                document.getElementById("password").className = 'form-control is-invalid';
+                document.getElementById("password-valid-feedback").style.display = 'none';
+                document.getElementById("password-invalid-feedback").style.display = 'block';
+                document.getElementById("password-invalid-feedback").textContent = password_strength;
+                console.log(password_strength);
+            }
+        }
+
+        function check(id, url) {
+            var attribute = document.getElementById(id).value;
+
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Configure it: POST-request for the specified URL
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken')); // Include CSRF token
+
+            // Set up a function to handle the response
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Check if the response indicates existence
+                    if (response.exists) {
+                        // If exists, mark the input as invalid
+                        document.getElementById(id).className = "form-control is-invalid";
+                        document.getElementById(id + "-valid-feedback").style.display = 'none';
+                        document.getElementById(id + "-invalid-feedback").style.display = 'block';
+                    } else {
+                        // If does not exist, mark the input as valid
+                        document.getElementById(id).className = "form-control is-valid";
+                        document.getElementById(id + "-valid-feedback").style.display = 'block';
+                        document.getElementById(id + "-invalid-feedback").style.display = 'none';
+                    }
+
+                } else {
+                    console.error('Request failed with status:', xhr.status);
+                }
+            };
+
+            // Send the request with the attribute data
+            xhr.send(JSON.stringify({ attribute: attribute })); // Use the id as the key
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Check if this cookie string begins with the name we want
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+
+</html>
