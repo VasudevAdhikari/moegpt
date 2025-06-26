@@ -118,42 +118,6 @@ Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 ---
 
-## 🚀 How to Push MoeGPT to GitHub
-
-Follow these steps to push your local MoeGPT project to [https://github.com/VasudevAdhikari/moegpt](https://github.com/VasudevAdhikari/moegpt):
-
-1. **Initialize Git (if not already initialized):**
-   ```bash
-   git init
-   ```
-
-2. **Add the remote repository:**
-   ```bash
-   git remote add origin https://github.com/VasudevAdhikari/moegpt.git
-   ```
-
-3. **Add all files to the staging area:**
-   ```bash
-   git add .
-   ```
-
-4. **Commit your changes:**
-   ```bash
-   git commit -m "Initial commit"
-   ```
-
-5. **Push to the GitHub repository:**
-   ```bash
-   git branch -M main
-   git push -u origin main
-   ```
-
-> **Note:**  
-> - Make sure you have the necessary permissions to push to the repository.
-> - If prompted, enter your GitHub username and personal access token (not your password).
-
----
-
 ## ✨ Usage
 
 - **Register:** Create a new account via the registration page.
@@ -162,12 +126,6 @@ Follow these steps to push your local MoeGPT project to [https://github.com/Vasu
 - **History:** View, switch, or delete chat modules from the history dropdown.
 - **Profile:** See your stats and account info on the profile page.
 - **Logout:** Securely log out at any time.
-
----
-
-## 📑 Screenshots
-
-> _Add screenshots here to showcase the chatbot UI, profile page, and error handling!_
 
 ---
 
